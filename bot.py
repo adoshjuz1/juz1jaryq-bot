@@ -12,7 +12,7 @@ from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardMarkup, KeyboardButton
-from faster_whisper import WhisperModel
+#from faster_whisper import WhisperModel
 from dotenv import load_dotenv
 
 # ====================== НАСТРОЙКИ ======================
@@ -37,7 +37,7 @@ class DRRState(StatesGroup):
     waiting_data = State()
 
 logging.basicConfig(level=logging.INFO)
-model = WhisperModel("tiny", device="cpu", compute_type="int8")
+#model = WhisperModel("tiny", device="cpu", compute_type="int8")
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher(storage=MemoryStorage())
 
@@ -266,14 +266,14 @@ async def drr_input_finish(message: types.Message, state: FSMContext):
         await state.clear()
     except: await message.answer("❌ Ошибка в формате!")
 
-@dp.message(F.voice)
-async def voice_handler(message: types.Message):
-    msg = await message.answer("⏳ Расшифровываю голос...")
-    file = await bot.get_file(message.voice.file_id)
-    await bot.download_file(file.file_path, "v.ogg")
-    segments, _ = model.transcribe("v.ogg")
-    text = "".join([s.text for s in segments])
-    await msg.edit_text(f"🎤 Текст:\n{text}", parse_mode="HTML")
+#@dp.message(F.voice)
+#async def voice_handler(message: types.Message):
+    #msg = await message.answer("⏳ Расшифровываю голос...")
+    #file = await bot.get_file(message.voice.file_id)
+    #await bot.download_file(file.file_path, "v.ogg")
+    #segments, _ = model.transcribe("v.ogg")
+    #text = "".join([s.text for s in segments])
+    #await msg.edit_text(f"🎤 Текст:\n{text}", parse_mode="HTML")
 
 @dp.message(F.text == "🔄 Импорт из Ozon")
 async def manual_imp(message: types.Message):
