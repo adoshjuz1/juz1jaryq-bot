@@ -1,0 +1,6 @@
+aiogram
+pandas
+openpyxl
+aiohttp
+faster-whisper
+python-dotenv
